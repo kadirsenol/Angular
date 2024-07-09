@@ -12,6 +12,7 @@ import { Component } from '@angular/core';
   <input type="text" [(ngModel)] = "title">
    
   
+  
   `,
   styleUrls: ['./app.component.scss']
 })
