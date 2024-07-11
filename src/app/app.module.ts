@@ -8,6 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { ExampleDirective } from './drectives/example.directive';
 import { StructuralDirective } from './drectives/structural.directive';
 import { StructralIndexDirective } from './drectives/structral-index.directive';
+import { CustomPipe } from './pipes/custom.pipe';
 
 @NgModule({
   declarations: [
@@ -15,14 +16,15 @@ import { StructralIndexDirective } from './drectives/structral-index.directive';
     HomeComponent,
     ExampleDirective,
     StructuralDirective,
-    StructralIndexDirective
+    StructralIndexDirective,
+    CustomPipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule
   ],
-  providers: [],
+  providers: [CustomPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,12 +1,12 @@
 import { style } from '@angular/animations';
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   // templateUrl: './app.component.html',
   template: `
   <p>asdasdasdqqqqq<p>
-  <div style="background-color: blue;"><app-home [titlea]="title"/></div> 
+  <div style="background-color: blue;"><app-home [titlea]="title" communation={{communationmessage}}>assad</app-home></div> 
   <input type="text" value={{title}}>
   <input type="text" [value]="title">
   <input type="text" [(ngModel)] = "title">
@@ -29,6 +29,7 @@ import { Component } from '@angular/core';
 
    <div *appStructural="'1';let a = deger" >structtural drective{{a}} </div>
     <div *appStructralIndex="isimler; let names = isimler ; let i = index" >structural drective for index {{names}} {{i}}</div>
+    <div >Custom Pipe Denemesi {{ pipe | custom : 2 : 5}}</div>
   
   `,
   // styleUrls: ['./app.component.scss']
@@ -36,6 +37,8 @@ import { Component } from '@angular/core';
 
 })
 export class AppComponent {
+
+
   title : string = 'project1asd';
   names : string[] = ["ali","mehmet","sezer"] ;
   sayi : number = 1 ;
@@ -43,5 +46,8 @@ export class AppComponent {
   s1 : any = {'background-color':'blue'} 
   renk : string ="blue";
   isimler : string[] = ["ahmet","mehmet","sezer"]
+  pipe : string = "suayip";
+  communationmessage : string = "child e iletilen mesaj"; // Parent to Child Communication
+  inpDataChange : string = "qweassssd"
 }
   

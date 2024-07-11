@@ -12,12 +12,12 @@ export class ExampleDirective implements OnInit {
   constructor(private element:ElementRef) { 
 
     element.nativeElement.style.backgroundColor="red";
-    $(element.nativeElement).fadeOut(2000).fadeIn();
+    // $(element.nativeElement).fadeOut(2000).fadeIn();
 
   }
   ngOnInit(): void { // drectiv for dynamic ctordan hemen sonra devreye giren metottur
     this.element.nativeElement.style.backgroundColor=this.color;
-    $(this.element.nativeElement).fadeOut(2000).fadeIn();
+    // $(this.element.nativeElement).fadeOut(2000).fadeIn();
   }
 
   @Input() color: string="";
