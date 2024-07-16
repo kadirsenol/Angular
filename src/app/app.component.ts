@@ -1,6 +1,7 @@
 import { style } from '@angular/animations';
 import { Component, Input, OnChanges, SimpleChanges,ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators,FormControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { lessThanFiveValidator, notIstanbul, validateAllFormFields } from './validators/app';
 
 
 @Component({
@@ -47,31 +48,51 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 
   <form [formGroup]="frmg" (ngSubmit)="submitModelDrevinForm(frmg.value)">
     <input type="text" placeholder="Name" formControlName="name"> <br>
+      <div *ngIf="frmg.get('name').errors?.['required'] && (frmg.get('name').dirty || frmg.get('name').touched)">
+         Name is required
+      </div> 
     <input type="text" placeholder="Surname" formControlName="surname"> <br>
-    <div formGrou pName="adress">
-      <input type="text" placeholder="İl" formControlName="il"><br>
+    <div *ngIf="frmg.get('name').errors?.['required'] && (frmg.get('surname').dirty || frmg.get('surname').touched)">
+         Surname is required
+      </div> 
+    <input type="number" placeholder="Yas" formControlName="yas"> <br>
+    <div *ngIf="frmg.get('yas').errors?.['required'] && (frmg.get('yas').dirty || frmg.get('yas').touched)">
+         Yas is required
+      </div> 
+      <div *ngIf="frmg.get('yas').errors?.['lessThanFive'] && (frmg.get('yas').dirty || frmg.get('yas').touched)">
+          Number should be less than 5
+      </div>
+    <div formGroupName="adress">
+      <input type="text" placeholder="İl" formControlName="il"><br>    
+      <div *ngIf="frmg.get('adress').get('il').errors?.['noIstanbul']">
+          istanbul geçerli değildir
+      </div>          
       <input type="text" placeholder="İlçe" formArrayName="ilce"><br>
     </div>
     <button>send</button>
   </form>
+  <p>form touched = {{frmg.touched}}<p>
+  <p>name control touched = {{frmg.get("name").touched}}<p>
+
   `,
   // styleUrls: ['./app.component.scss']
   styles: ['.myclass{background-color:red;}', '.myclass2{background-color:blue}']
 
 })
 export class AppComponent {
-
+  
   frmg : FormGroup;
   constructor(private formBuilder:FormBuilder){
     this.frmg = formBuilder.group({
-      name : ["", Validators.required],
+      name : ["", [Validators.required]],
       surname: ["", [Validators.required, Validators.maxLength(5)]],
+      yas : ["", [Validators.required, lessThanFiveValidator()]],
       adress : formBuilder.group({
-        il:[""],
+        il:["",[Validators.required, notIstanbul() ]],
         ilce:[""]
       })
     })    
-
+    
     this.frmg.valueChanges.subscribe({
       next:data=>{
         console.log(data);
@@ -148,9 +169,10 @@ export class AppComponent {
 }
 
 submitModelDrevinForm(data){
+  if(this.frmg.valid){
   console.log("Model Driven Forms Submit Edildi.");  
-  this.frmg.controls["name"].setValue("ali"); //controls yerine get("name") seklinde de kullanabiliriz.
-  this.frmg.controls["name"].setValue("ali",{onlySelf:true});
+  // this.frmg.controls["name"].setValue("ali"); //controls yerine get("name") seklinde de kullanabiliriz.
+  // this.frmg.controls["name"].setValue("ali",{onlySelf:true});
   console.log(data); 
   console.log(data.name);
   console.log(data.surname);
@@ -158,8 +180,47 @@ submitModelDrevinForm(data){
   console.log(this.frmg.value.name);
   console.log(this.frmg.valid);
   console.log(this.frmg.touched);
+  console.log(this.frmg.dirty);
+  console.log(this.frmg.get("name").dirty);
+  console.log(this.frmg.pristine);
+  console.log(this.frmg.get("name").pristine);
+  
   this.frmg.reset();  
 
+  console.log("Progromatik olarak state değiştirme fonksiyonları");
+  this.frmg.markAsTouched();
+  this.frmg.get("name").markAsTouched();
+  this.frmg.get("name").markAsTouched({onlySelf:true});
+  this.frmg.get("adress").markAsTouched();
+  this.frmg.get("adress").markAllAsTouched();
+  this.frmg.markAsUntouched();
+  this.frmg.get("name").markAsUntouched();
+  this.frmg.markAsDirty();
+  this.frmg.get("name").markAsDirty();
+  this.frmg.markAsPristine();
+  this.frmg.get("name").markAsPristine();
+  this.frmg.get("name").disable();
+  this.frmg.get("name").enable();
+  }
+  else {
+    validateAllFormFields(this.frmg);
+  }
 }
+
+
+
+// validateAllFormFields(formGroup : FormGroup){
+//   Object.keys(formGroup.controls).forEach(field =>{
+//     const control = formGroup.get(field);
+//     if(control instanceof FormGroup){
+//       this.validateAllFormFields(control);
+//     } else {
+//       control.markAsTouched({onlySelf: true});
+//     }
+//   })
+// }
+
+
+
 
 }
