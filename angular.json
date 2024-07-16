@@ -32,7 +32,7 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": ["C:/Users/k.senol/Desktop/kdrsnlSource/ng example/project1/node_modules/jquery/dist/jquery.min.js"]
+            "scripts": ["C:/Users/kdrsn/Desktop/Angular Example/project1/node_modules/jquery/dist/jquery.min.js"]
           },
           "configurations": {
             "production": {
