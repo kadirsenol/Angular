@@ -1,7 +1,8 @@
 import { style } from '@angular/animations';
 import { Component, Input, OnChanges, SimpleChanges,ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators,FormControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { lessThanFiveValidator, notIstanbul, validateAllFormFields } from './validators/app';
+import { ProductService } from './services/product-service';
+import { lessThanFiveValidator, matchPassword, notIstanbul, parameterValid, validateAllFormFields } from './validators/app';
 
 
 @Component({
@@ -62,6 +63,13 @@ import { lessThanFiveValidator, notIstanbul, validateAllFormFields } from './val
       <div *ngIf="frmg.get('yas').errors?.['lessThanFive'] && (frmg.get('yas').dirty || frmg.get('yas').touched)">
           Number should be less than 5
       </div>
+    <input type="text" formControlName="password" placeholder="password"> <br>      
+    <input type="text" formControlName="passwordConfirm" placeholder="password confirm"><br>
+      <div *ngIf="frmg.errors?.['noMatch'] && (frmg.get('passwordConfirm').dirty || frmg.get('passwordConfirm').touched)">
+          Passwords is not match
+      </div>
+      <input type="text" placeholder="inputone" formControlName="inputone"><br>
+      <input type="text" placeholder="inputtwo" formControlName="inputtwo"><br>
     <div formGroupName="adress">
       <input type="text" placeholder="İl" formControlName="il"><br>    
       <div *ngIf="frmg.get('adress').get('il').errors?.['noIstanbul']">
@@ -76,22 +84,28 @@ import { lessThanFiveValidator, notIstanbul, validateAllFormFields } from './val
 
   `,
   // styleUrls: ['./app.component.scss']
-  styles: ['.myclass{background-color:red;}', '.myclass2{background-color:blue}']
+  styles: ['.myclass{background-color:red;}', '.myclass2{background-color:blue}'],
+  // providers:[ProductService]
+
 
 })
 export class AppComponent {
   
   frmg : FormGroup;
-  constructor(private formBuilder:FormBuilder){
+  constructor(private formBuilder:FormBuilder, private productService:ProductService){
     this.frmg = formBuilder.group({
       name : ["", [Validators.required]],
       surname: ["", [Validators.required, Validators.maxLength(5)]],
       yas : ["", [Validators.required, lessThanFiveValidator()]],
+      password: [""],
+      passwordConfirm : [""],
+      inputone:[""],
+      inputtwo:[""],
       adress : formBuilder.group({
         il:["",[Validators.required, notIstanbul() ]],
         ilce:[""]
       })
-    })    
+    }, {validators : [matchPassword(), parameterValid("inputone","inputtwo")]});    
     
     this.frmg.valueChanges.subscribe({
       next:data=>{
@@ -112,7 +126,9 @@ export class AppComponent {
       next:data=>{
         console.log(data);        
       }
-    })
+    })    
+    console.log(productService.getProducts());    
+
   }
 
   title : string = 'project1asd';

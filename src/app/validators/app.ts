@@ -20,6 +20,31 @@ export function notIstanbul(): ValidatorFn {
     }
 }
 
+export function matchPassword() : ValidatorFn {
+  return (control : AbstractControl) : ValidationErrors | null => {
+    const password: string = control.get("password").value;
+    const passwordConfirm : string = control.get("passwordConfirm").value;
+
+    if(password != passwordConfirm){
+      return {"noMatch" : true}
+    }
+    return null ;
+  };
+}
+
+
+export function parameterValid(parameter1? : string, parameter2? : string) : ValidatorFn {
+  return (control : AbstractControl) : ValidationErrors | null => {
+    const value1 : string = control.get("inputone").value;
+    const value2 : string = control.get("inputtwo").value;
+
+    const total: string = value1 + value2
+    if(total === "sd"){
+      return {"noIn" : true};
+    }
+    return null ;
+  }
+}
 
 export function validateAllFormFields(formGroup : FormGroup){
     Object.keys(formGroup.controls).forEach(field =>{

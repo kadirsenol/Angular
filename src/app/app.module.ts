@@ -9,6 +9,7 @@ import { ExampleDirective } from './drectives/example.directive';
 import { StructuralDirective } from './drectives/structural.directive';
 import { StructralIndexDirective } from './drectives/structral-index.directive';
 import { CustomPipe } from './pipes/custom.pipe';
+import { ProductDetail, ProductService } from './services/product-service';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,7 @@ import { CustomPipe } from './pipes/custom.pipe';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [CustomPipe],
+  providers: [CustomPipe,ProductDetail],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
