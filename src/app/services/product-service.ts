@@ -11,7 +11,7 @@ export class ProductService {
     }
     getProducts(): Product[] {
         const products:Product[] = [
-                {no:1,name:"silgi",quantity:8},
+                {no:1,name:"silgi",quantity:this.productDetail.price},
                 {no:5,quantity:5,name:"kalem"}
                 // new product(1,"",5)
             ];
