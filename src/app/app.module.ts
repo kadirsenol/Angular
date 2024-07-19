@@ -20,6 +20,8 @@ import { UserReadComponent } from './components/user-read/user-read.component';
 import { UserService } from './services/user.service';
 import { ErrorPageComponent } from './components/error-page/error-page.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { ParentComponent } from './components/parent/parent.component';
+import { ChildComponent } from './components/child/child.component';
 
 
 @NgModule({
@@ -36,7 +38,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     UserCreateComponent,
     UserReadComponent,
     ErrorPageComponent,
-    NavbarComponent
+    NavbarComponent,
+    ParentComponent,
+    ChildComponent
   ],
   imports: [
     BrowserModule,
