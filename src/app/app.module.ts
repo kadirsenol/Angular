@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -22,6 +21,17 @@ import { ErrorPageComponent } from './components/error-page/error-page.component
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ParentComponent } from './components/parent/parent.component';
 import { ChildComponent } from './components/child/child.component';
+import { PhotosWithResolveGuardComponent } from './components/photos-with-resolve-guard/photos-with-resolve-guard.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { UserComponent } from './components/user/user.component';
+import { CustomComponent } from './components/custom/custom.component';
+import { CustomModule } from './modules/custom/custom.module';
+import { CustomerComponent } from './components/customers/customer/customer.component';
+import { CustomerDetailComponent } from './components/customers/customer-detail/customer-detail.component';
+import { OrderComponent } from './components/orders/order/order.component';
+import { OrderDetailComponent } from './components/orders/order-detail/order-detail.component';
+import { CustomerModule } from './modules/customer/customer.module';
+import { OrderModule } from './modules/order/order.module';
 
 
 @NgModule({
@@ -40,14 +50,20 @@ import { ChildComponent } from './components/child/child.component';
     ErrorPageComponent,
     NavbarComponent,
     ParentComponent,
-    ChildComponent
+    ChildComponent,
+    PhotosWithResolveGuardComponent,
+    AdminComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    CustomModule,
+    CustomerModule,
+    OrderModule
   ],
   providers: [CustomPipe,ProductDetail, 
                 {provide:ProductService, useFactory: (httpClienter : HttpClient) =>{
