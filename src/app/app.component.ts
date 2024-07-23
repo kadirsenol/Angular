@@ -16,7 +16,7 @@ import { lessThanFiveValidator, matchPassword, notIstanbul, parameterValid, vali
   // styleUrls: ['./app.component.scss']
   styles: ['.myclass{background-color:red;}', '.myclass2{background-color:blue}'],
   // providers:[ProductService]
-
+  
 
 })
 export class AppComponent {
